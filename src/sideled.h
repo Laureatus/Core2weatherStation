@@ -11,7 +11,7 @@
 #define SIDELED_STATE_FADE 4
 #define SIDELED_STATE_FADE_RG 5
 #define SIDELED_STATE_FADE_GB 6
-#define SIDELED_STATE_FADE_BR 7
+#define SIDELED_STATE_FADE_BR 7 
 
 
 #include <Arduino.h>

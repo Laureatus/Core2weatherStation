@@ -40,7 +40,7 @@ void LEDtask(void *arg){
         }
       }
       FastLED.show();
-      next_blink = millis() + 500;
+      next_blink = millis() + 0.1;
     }
     if(next_effekt < millis() && !block) {
       for(int a = 0; a < SIDELED_NUM_LEDS; a++) {

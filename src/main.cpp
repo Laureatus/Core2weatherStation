@@ -68,6 +68,9 @@ void event_handler_button(struct _lv_obj_t * obj, lv_event_t event) {
     if(lv_checkbox_is_checked(blink_checkbox)) state = SIDELED_STATE_BLINK;
     set_sideled_color(led_start,led_end, color);
     set_sideled_state(led_start,led_end, state);
+    char buffer[30];
+    sprintf(buffer, "%d", color);
+    mqtt_publish("lorin/sideled", buffer);
   }
 }
 
@@ -102,7 +105,14 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   String payloadS = String(buf);
   payloadS.trim();
 
-  if(String(topic) == "example") {
+  if(String(topic) == "lorin/example") {
+    if (payloadS == "red")
+    {
+      set_sideled_color(0, 5, CRGB::Red);
+      set_sideled_state(0, 5, SIDELED_STATE_ON);
+
+    }
+    
     if(payloadS == "on") {
       lv_led_on(led);
     }
@@ -133,11 +143,11 @@ lv_obj_t * mbox;
 void loop() {
   if(next_lv_task < millis()) {
     lv_task_handler();
-    next_lv_task = millis() + 5;
+    next_lv_task = millis() + 10;
   }
 
   // Uncomment the following lines to enable MQTT
-  // mqtt_loop();
+   mqtt_loop();
 }
 
 // ----------------------------------------------------------------------------
@@ -149,12 +159,12 @@ void setup() {
   init_display();
   Serial.begin(115200);
   // Uncomment the following lines to enable WiFi and MQTT
-  //lv_obj_t * wifiConnectingBox = show_message_box_no_buttons("Connecting to WiFi...");
-  //lv_task_handler();
-  //delay(5);
-  //setup_wifi();
-  //mqtt_init(mqtt_callback);
-  //close_message_box(wifiConnectingBox);
+  lv_obj_t * wifiConnectingBox = show_message_box_no_buttons("Connecting to WiFi...");
+  lv_task_handler();
+  delay(5);
+  setup_wifi();
+  mqtt_init(mqtt_callback);
+  close_message_box(wifiConnectingBox);
   init_gui_elements();
   init_sideled();
 }

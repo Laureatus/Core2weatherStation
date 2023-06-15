@@ -37,7 +37,7 @@ void mqtt_re_connect() {
     Serial.println("Attempting MQTT connection...");
     if (client.connect(clientId)) {
         // Define subscriptions here
-      client.subscribe("lvgl/#");
+      client.subscribe("lorin/example");
     } else {
       Serial.println("failed, rc=");
       Serial.println(client.state());
