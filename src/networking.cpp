@@ -37,7 +37,7 @@ void mqtt_re_connect() {
     Serial.println("Attempting MQTT connection...");
     if (client.connect(clientId)) {
         // Define subscriptions here
-      client.subscribe("imageroller/#");
+      client.subscribe("m5core2/temp");
       Serial.println("Connected!");
     } else {
       Serial.println("failed, rc=");

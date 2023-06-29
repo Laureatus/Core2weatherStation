@@ -18,6 +18,7 @@ unsigned long next_lv_task = 0;
 float tmp = 0.0;
 float hum = 0.0;
 float pressure = 0.0;
+String testMqttCallback = "";
 
 SHT3X sht30;
 QMP6988 qmp6988;
@@ -29,12 +30,18 @@ void event_handler_button(struct _lv_obj_t * obj, lv_event_t event) {
 
 lv_obj_t * label_temp;
 lv_obj_t * label_hum;
+lv_obj_t * label_test;
+lv_obj_t * label_test2;
 
 void init_gui() {
   add_label("Temperatur:", 10, 10);
   label_temp = add_label("0 °C", 150, 10);
   add_label("Humidity:", 10, 50);
   label_hum = add_label("0 %", 150, 50);
+  add_label("Test", 10, 90);
+  label_test = add_label("TestValue", 150, 90);
+  add_label("Test2", 10, 130);
+  label_test2 = add_label("TestValue2", 150, 130);
 }
 
 // ----------------------------------------------------------------------------
@@ -52,8 +59,8 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   Serial.println(topic);
   Serial.println(payloadS);
 
-  if(String(topic) == "imageroller/action") {
-
+  if(String(topic) == "m5core2/temp") {
+    testMqttCallback = payloadS;
   }
 }
 
@@ -88,7 +95,7 @@ void loop() {
       snprintf (buf, 32, "%.2f", hum);
       mqtt_publish("m5core2/hum", buf);
     }
-    next_temp_send = millis() + 1000;
+    next_temp_send = millis() + 5000;
   }
   if(next_temp_show < millis()) {
      pressure = qmp6988.calcPressure();
@@ -97,6 +104,7 @@ void loop() {
       hum = sht30.humidity;
       lv_label_set_text(label_temp, (String(tmp, 2)+ " °C").c_str());
       lv_label_set_text(label_hum, (String(hum, 2)+ " %").c_str());
+      lv_label_set_text(label_test, (testMqttCallback + " tmpAgain").c_str());
     }else{
       tmp=0,hum=0;
     }
