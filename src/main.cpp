@@ -94,6 +94,10 @@ void loop() {
       mqtt_publish((String(m5stack_primary) + "/temp").c_str(), buf);
       snprintf (buf, 32, "%.2f", hum);
       mqtt_publish((String(m5stack_primary) + "/hum").c_str(), buf);
+
+      mqtt_publish((String(influxdb_topic) + "/status").c_str(), buf);
+      mqtt_publish((String(influxdb_topic) + "/temp").c_str(), buf);
+      mqtt_publish((String(influxdb_topic) + "/hum").c_str(), buf);
     }
     next_temp_send = millis() + 5000;
   }

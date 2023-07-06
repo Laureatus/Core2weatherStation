@@ -9,5 +9,6 @@ extern const char * ssid;
 extern const char * passphrase;
 extern const char *  m5stack_primary;
 extern const char *  m5stack_secondary;
+extern const char *  influxdb_topic;
 
 #endif // BASE_H
