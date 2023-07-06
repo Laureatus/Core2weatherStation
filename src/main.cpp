@@ -40,9 +40,9 @@ void init_gui() {
   label_temp = add_label("0 °C", 150, 10);
   add_label("Humidity:", 10, 50);
   label_hum = add_label("0 %", 150, 50);
-  add_label((String(second_station_label) + " Temp").c_str(), 10, 90);
+  add_label((String(second_station_label) + " Temp:").c_str(), 10, 90);
   label_station2temp = add_label("0 °C", 150, 90);
-  add_label((String(second_station_label) + " Hum").c_str(), 10, 130);
+  add_label((String(second_station_label) + " Hum:").c_str(), 10, 130);
   label_station2hum = add_label("0 %", 150, 130);
 }
 
@@ -112,8 +112,8 @@ void loop() {
       hum = sht30.humidity;
       lv_label_set_text(label_temp, (String(tmp, 2)+ " °C").c_str());
       lv_label_set_text(label_hum, (String(hum, 2)+ " %").c_str());
-      lv_label_set_text(label_station2temp, (String(second_station_label) + " Temp: " + secondCoreTemp + " °C").c_str());
-      lv_label_set_text(label_station2hum, (String(second_station_label) + " Hum: " + secondCoreHum + " %").c_str());
+      lv_label_set_text(label_station2temp, (secondCoreTemp + " °C").c_str());
+      lv_label_set_text(label_station2hum, (secondCoreHum + " %").c_str());
     }else{
       tmp=0,hum=0;
     }
