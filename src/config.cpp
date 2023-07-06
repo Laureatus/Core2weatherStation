@@ -11,9 +11,12 @@ const char *  password = "";
 const char * ssid = "LERNKUBE";
 const char * passphrase = "l3rnk4b3";
 
-// M5Stack names
+// MQTT topics
 const char * m5stack_primary = "WeatherStation_1";
 const char * m5stack_secondary = "WeatherStation_2";
 const char * influxdb_topic = "WeatherStation_Main";
+
+// Station Name
+const char * second_station_label = "Station 2";
 
 #endif // BASE_H
