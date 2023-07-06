@@ -90,13 +90,12 @@ void loop() {
       char buf[32];
       sprintf(buf, "{\"temp\":%.2f, \"hum\":%.2f}", tmp, hum);
       mqtt_publish((String(m5stack_primary) + "/status").c_str(), buf);
+      mqtt_publish((String(influxdb_topic) + "/status").c_str(), buf);
       snprintf (buf, 32, "%.2f", tmp);
       mqtt_publish((String(m5stack_primary) + "/temp").c_str(), buf);
+      mqtt_publish((String(influxdb_topic) + "/temp").c_str(), buf);
       snprintf (buf, 32, "%.2f", hum);
       mqtt_publish((String(m5stack_primary) + "/hum").c_str(), buf);
-
-      mqtt_publish((String(influxdb_topic) + "/status").c_str(), buf);
-      mqtt_publish((String(influxdb_topic) + "/temp").c_str(), buf);
       mqtt_publish((String(influxdb_topic) + "/hum").c_str(), buf);
     }
     next_temp_send = millis() + 5000;
