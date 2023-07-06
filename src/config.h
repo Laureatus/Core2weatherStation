@@ -7,5 +7,7 @@ extern const char *  username;
 extern const char *  password;
 extern const char * ssid;
 extern const char * passphrase;
+extern const char *  m5stack_primary;
+extern const char *  m5stack_secondary;
 
 #endif // BASE_H

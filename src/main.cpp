@@ -59,7 +59,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   Serial.println(topic);
   Serial.println(payloadS);
 
-  if(String(topic) == "m5core2/temp") {
+  if(String(topic) == (String(m5stack_secondary) + "/temp").c_str()) {
     testMqttCallback = payloadS;
   }
 }
@@ -89,11 +89,11 @@ void loop() {
     if(tmp != 0) {
       char buf[32];
       sprintf(buf, "{\"temp\":%.2f, \"hum\":%.2f}", tmp, hum);
-      mqtt_publish("m5core2/status", buf);
+      mqtt_publish((String(m5stack_primary) + "/status").c_str(), buf);
       snprintf (buf, 32, "%.2f", tmp);
-      mqtt_publish("m5core2/temp", buf);
+      mqtt_publish((String(m5stack_primary) + "/temp").c_str(), buf);
       snprintf (buf, 32, "%.2f", hum);
-      mqtt_publish("m5core2/hum", buf);
+      mqtt_publish((String(m5stack_primary) + "/hum").c_str(), buf);
     }
     next_temp_send = millis() + 5000;
   }

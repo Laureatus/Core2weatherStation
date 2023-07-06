@@ -37,7 +37,7 @@ void mqtt_re_connect() {
     Serial.println("Attempting MQTT connection...");
     if (client.connect(clientId)) {
         // Define subscriptions here
-      client.subscribe("m5core2/temp");
+      client.subscribe((String(m5stack_secondary) + "/temp").c_str());
       Serial.println("Connected!");
     } else {
       Serial.println("failed, rc=");
