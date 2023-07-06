@@ -18,7 +18,9 @@ unsigned long next_lv_task = 0;
 float tmp = 0.0;
 float hum = 0.0;
 float pressure = 0.0;
-String testMqttCallback = "";
+
+String secondCoreTemp = "";
+String secondCoreHum = "";
 
 SHT3X sht30;
 QMP6988 qmp6988;
@@ -30,18 +32,18 @@ void event_handler_button(struct _lv_obj_t * obj, lv_event_t event) {
 
 lv_obj_t * label_temp;
 lv_obj_t * label_hum;
-lv_obj_t * label_test;
-lv_obj_t * label_test2;
+lv_obj_t * label_station2temp;
+lv_obj_t * label_station2hum;
 
 void init_gui() {
   add_label("Temperatur:", 10, 10);
   label_temp = add_label("0 °C", 150, 10);
   add_label("Humidity:", 10, 50);
   label_hum = add_label("0 %", 150, 50);
-  add_label("Test", 10, 90);
-  label_test = add_label("TestValue", 150, 90);
-  add_label("Test2", 10, 130);
-  label_test2 = add_label("TestValue2", 150, 130);
+  add_label("Station 2 Temp", 10, 90);
+  label_station2temp = add_label("0 °C", 150, 90);
+  add_label("Station 2 Hum", 10, 130);
+  label_station2hum = add_label("0 %", 150, 130);
 }
 
 // ----------------------------------------------------------------------------
@@ -60,7 +62,10 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
   Serial.println(payloadS);
 
   if(String(topic) == (String(m5stack_secondary) + "/temp").c_str()) {
-    testMqttCallback = payloadS;
+    secondCoreTemp = payloadS;
+  }
+  if(String(topic) == (String(m5stack_secondary) + "/hum").c_str()) {
+    secondCoreHum = payloadS;
   }
 }
 
@@ -107,7 +112,8 @@ void loop() {
       hum = sht30.humidity;
       lv_label_set_text(label_temp, (String(tmp, 2)+ " °C").c_str());
       lv_label_set_text(label_hum, (String(hum, 2)+ " %").c_str());
-      lv_label_set_text(label_test, (testMqttCallback + " tmpAgain").c_str());
+      lv_label_set_text(label_station2temp, ("Station 2 Temp: " + secondCoreTemp + " °C").c_str());
+      lv_label_set_text(label_station2hum, ("Station 2 Hum: " + secondCoreHum + " %").c_str());
     }else{
       tmp=0,hum=0;
     }
