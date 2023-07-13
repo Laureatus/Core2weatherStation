@@ -1,6 +1,6 @@
 # Core2weatherStation
 
-The goal of this project ist to fetch data with MQTT from a M5Stack Core2 that is equiped with a ENV3 Sensor and send the data to an InfluxDB to then display the measured data on a grafana dashboard.
+The goal of this project is to fetch data with MQTT from two M5Stack Core2 that are equiped with a ENV3 Sensor and send the data to an InfluxDB to then display the measured data on a grafana dashboard.
 
 ## Diagramm
 
